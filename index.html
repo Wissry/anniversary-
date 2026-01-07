@@ -8,72 +8,50 @@
 <style>
 body {
     margin: 0;
-    padding: 0;
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #ff2f92, #ff9ad5);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     color: white;
     text-align: center;
     overflow: hidden;
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.18);
-    padding: 35px 25px;
+    background: rgba(255,255,255,0.18);
+    padding: 30px;
     border-radius: 25px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.25);
     max-width: 520px;
     width: 90%;
-    position: relative;
-    z-index: 2;
+    margin: 80px auto;
 }
 
-h1 {
+.blocked {
     font-size: 3em;
-    margin-bottom: 10px;
+    font-weight: bold;
+    margin-top: 40vh;
 }
 
-p {
-    font-size: 1.2em;
-    margin-bottom: 20px;
+.stage2 {
+    margin-top: 35vh;
 }
 
-.video-box {
-    background: white;
+input[type="password"] {
+    padding: 12px;
+    width: 70%;
     border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: none;
+    font-size: 1em;
+    text-align: center;
 }
 
-.video-box a {
-    display: inline-block;
-    padding: 15px 25px;
+button {
+    margin-top: 15px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
     background: #ff2f92;
     color: white;
-    text-decoration: none;
-    font-size: 1.1em;
-    border-radius: 30px;
-    transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.video-box a:hover {
-    background: #ff117f;
-    transform: scale(1.05);
-}
-
-.message {
-    margin-top: 25px;
-    font-size: 1.1em;
-    line-height: 1.5;
-}
-
-.date {
-    margin-top: 15px;
-    font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 /* Floating hearts */
@@ -86,17 +64,9 @@ p {
 }
 
 @keyframes floatUp {
-    0% {
-        transform: translateY(0);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-110vh);
-        opacity: 0;
-    }
+    0% { transform: translateY(0); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
 }
 </style>
 </head>
@@ -104,13 +74,9 @@ p {
 <body>
 
 <script>
-/* PASSWORD PROTECTION */
-var password = prompt("Enter the anniversary password 💖");
-if (password !== "10/7/2025") {
-    document.body.innerHTML = "<h1 style='color:white;'>Wrong password 💔</h1>";
-}
+const correctPassword = "10/7/2025";
 
-/* FLOATING HEARTS */
+/* Floating hearts generator */
 function createHeart() {
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -119,34 +85,69 @@ function createHeart() {
     heart.style.animationDuration = (5 + Math.random() * 5) + "s";
     document.body.appendChild(heart);
 
-    setTimeout(() => {
-        heart.remove();
-    }, 8000);
+    setTimeout(() => heart.remove(), 8000);
+}
+setInterval(createHeart, 500);
+
+/* -------- PASSWORD FLOW -------- */
+
+// FIRST CHECK
+var input = prompt("Enter the anniversary password 💖");
+
+if (input === correctPassword) {
+    showContent();
+} else {
+    // show ASK 3AD screen → then stage 2
+    showStage2();
 }
 
-setInterval(createHeart, 500);
+function showStage2() {
+    document.body.innerHTML = `
+        <div class='blocked'>ASK 3AD</div>
+
+        <div class='stage2'>
+            <h2>3AD told you</h2>
+            <input id='pass2' type='password' placeholder='Enter password again'>
+            <br>
+            <button onclick='secondCheck()'>Open 💗</button>
+        </div>
+    `;
+}
+
+// SECOND CHECK FROM INPUT BOX
+function secondCheck() {
+    const p2 = document.getElementById("pass2").value;
+
+    if (p2 === correctPassword) {
+        showContent();
+    } else {
+        document.body.innerHTML = "<div class='blocked'>ASK 3AD<br>Wrong Password 💔</div>";
+    }
+}
+
+// SHOW ANNIVERSARY PAGE
+function showContent() {
+    document.body.innerHTML = `
+        <div class='container'>
+            <h1>HI KENO 💖</h1>
+            <p>An anniversary video from me to you</p>
+
+            <a href="https://share.icloud.com/photos/09cj19Im_PawBj6De3xXPBk6g" target="_blank">
+                ▶ Watch Our Anniversary Video
+            </a>
+
+            <div style='margin-top:20px;'>
+                Every moment with you means more to me than words can explain.  
+                Thank you for being the man of your dreams and my safe place 💕
+            </div>
+
+            <div style='margin-top:15px; font-size:1.2em; font-weight:bold;'>
+                💞 Happy 6th Month Anniversary 💞
+            </div>
+        </div>
+    `;
+}
 </script>
-
-<div class="container">
-    <h1>HI KENO 💖</h1>
-    <p>An anniversary video from me to you</p>
-
-    <div class="video-box">
-        <a href="https://share.icloud.com/photos/09cj19Im_PawBj6De3xXPBk6g" target="_blank">
-            ▶ Watch Our Anniversary Video
-        </a>
-    </div>
-
-    <div class="message">
-        Every moment with you means more to me than words can explain.  
-        Thank you for loving me, choosing me, and being my safe place.  
-        I’m grateful for us, always 💕
-    </div>
-
-    <div class="date">
-        💞 Happy 6th Month Anniversary 💞
-    </div>
-</div>
 
 </body>
 </html>
