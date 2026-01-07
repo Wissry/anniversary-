@@ -28,45 +28,32 @@ body {
 .blocked {
     font-size: 3em;
     font-weight: bold;
-    margin-top: 40vh;
+    margin-top: 38vh;
 }
 
-.stage2 {
-    margin-top: 35vh;
-}
-
-input[type="password"] {
-    padding: 12px;
-    width: 70%;
-    border-radius: 20px;
+.reload-btn {
+    margin-top: 20px;
+    padding: 12px 28px;
+    border-radius: 30px;
     border: none;
-    font-size: 1em;
-    text-align: center;
-}
-
-button {
-    margin-top: 15px;
-    padding: 12px 25px;
-    border-radius: 25px;
-    border: none;
-    background: #ff2f92;
-    color: white;
+    background: white;
+    color: #ff2f92;
     font-size: 1em;
 }
 
-/* Floating hearts */
-.heart {
+/* Mixed floating emojis */
+.float {
     position: absolute;
-    bottom: -20px;
-    font-size: 20px;
-    animation: floatUp 8s linear infinite;
-    opacity: 0.8;
+    bottom: -30px;
+    font-size: 22px;
+    animation: floatUp linear infinite;
+    opacity: 0.85;
 }
 
 @keyframes floatUp {
-    0% { transform: translateY(0); opacity: 0; }
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
     10% { opacity: 1; }
-    100% { transform: translateY(-110vh); opacity: 0; }
+    100% { transform: translateY(-110vh) scale(1.1); opacity: 0; }
 }
 </style>
 </head>
@@ -76,56 +63,46 @@ button {
 <script>
 const correctPassword = "10/7/2025";
 
-/* Floating hearts generator */
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "💗";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (5 + Math.random() * 5) + "s";
-    document.body.appendChild(heart);
+/* Floating animation */
+const emojis = ["💕","💗","🌸","✨","🥹","💖"];
 
-    setTimeout(() => heart.remove(), 8000);
+function createFloat() {
+    const el = document.createElement("div");
+    el.className = "float";
+    el.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+
+    el.style.left = Math.random()*100 + "vw";
+    el.style.animationDuration = (6 + Math.random()*5) + "s";
+
+    document.body.appendChild(el);
+    setTimeout(()=> el.remove(), 9000);
 }
-setInterval(createHeart, 500);
+setInterval(createFloat, 400);
 
 /* -------- PASSWORD FLOW -------- */
 
-// FIRST CHECK
 var input = prompt("Enter the anniversary password 💖");
 
-if (input === correctPassword) {
-    showContent();
-} else {
-    // show ASK 3AD screen → then stage 2
-    showStage2();
+if (input !== correctPassword) {
+    showAsk3AD();
 }
 
-function showStage2() {
+function showAsk3AD() {
+    // Only ASK 3AD + reload button
     document.body.innerHTML = `
         <div class='blocked'>ASK 3AD</div>
 
-        <div class='stage2'>
-            <h2>3AD told you</h2>
-            <input id='pass2' type='password' placeholder='Enter password again'>
-            <br>
-            <button onclick='secondCheck()'>Open 💗</button>
-        </div>
+        <button class='reload-btn' onclick='reloadPage()'>
+            Tap to Try Again 💗
+        </button>
     `;
 }
 
-// SECOND CHECK FROM INPUT BOX
-function secondCheck() {
-    const p2 = document.getElementById("pass2").value;
-
-    if (p2 === correctPassword) {
-        showContent();
-    } else {
-        document.body.innerHTML = "<div class='blocked'>ASK 3AD<br>Wrong Password 💔</div>";
-    }
+function reloadPage() {
+    location.reload();
 }
 
-// SHOW ANNIVERSARY PAGE
+/* ANNIVERSARY CONTENT */
 function showContent() {
     document.body.innerHTML = `
         <div class='container'>
@@ -137,16 +114,24 @@ function showContent() {
             </a>
 
             <div style='margin-top:20px;'>
-                Every moment with you means more to me than words can explain.  
-                Thank you for being the man of your dreams and my safe place 💕
+                Six months with you has been six months of growth, patience, laughter, and learning.  
+                We’ve had moments where I annoyed you, times we argued, but also times we loved harder and understood deeper.  
+                You are still the one I choose every day, the girl of my dreams and my safe home 💕.
             </div>
 
             <div style='margin-top:15px; font-size:1.2em; font-weight:bold;'>
-                💞 Happy 6th Month Anniversary 💞
+                💞 6 Months Together – July 10 Anniversary 💞
+            </div>
+
+            <div style='margin-top:10px; font-size:1.1em;'>
+                From Presley to Keno 💗
             </div>
         </div>
     `;
 }
+
+// expose for later stage
+window.reloadPage = reloadPage;
 </script>
 
 </body>
