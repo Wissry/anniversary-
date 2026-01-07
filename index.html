@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 6th Month Anniversary</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff2f92, #ff9ad5);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 35px 25px;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    max-width: 520px;
+    width: 90%;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.video-box {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.video-box a {
+    display: inline-block;
+    padding: 15px 25px;
+    background: #ff2f92;
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    border-radius: 30px;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.video-box a:hover {
+    background: #ff117f;
+    transform: scale(1.05);
+}
+
+.message {
+    margin-top: 25px;
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+.date {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<script>
+/* PASSWORD PROTECTION */
+var password = prompt("Enter the anniversary password 💖");
+if (password !== "10/7/2025") {
+    document.body.innerHTML = "<h1 style='color:white;'>Wrong password 💔</h1>";
+}
+
+/* FLOATING HEARTS */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💗";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 8000);
+}
+
+setInterval(createHeart, 500);
+</script>
+
+<div class="container">
+    <h1>HI KENO 💖</h1>
+    <p>An anniversary video from me to you</p>
+
+    <div class="video-box">
+        <a href="https://share.icloud.com/photos/09cj19Im_PawBj6De3xXPBk6g" target="_blank">
+            ▶ Watch Our Anniversary Video
+        </a>
+    </div>
+
+    <div class="message">
+        Every moment with you means more to me than words can explain.  
+        Thank you for loving me, choosing me, and being my safe place.  
+        I’m grateful for us, always 💕
+    </div>
+
+    <div class="date">
+        💞 Happy 6th Month Anniversary 💞
+    </div>
+</div>
+
+</body>
+</html>
